@@ -4,6 +4,8 @@ const submitBtn = document.getElementById('submit-button');
 const failureMessage = document.getElementById('failure');
 const successMessage = document.getElementById('success');
 
+const generatorInput = document.getElementById('generated-pin');
+const dialInput = document.getElementById('dialed-input');
 
 
 
@@ -12,6 +14,9 @@ const successMessage = document.getElementById('success');
 function pinGenerator() {
     const randomPin = fourDigitPin();
     setInputValueById('generated-pin', randomPin);
+
+    generatorInput.disabled = true;
+    dialInput.focus();
 }
 
 
@@ -19,8 +24,7 @@ function dialHandler(e) {
     const dialedNumber = e.target.innerText;
     const prevDialedNumber = getInputValueById('dialed-input');
 
-
-    if (isNaN(dialedNumber)) {
+    if (isNaN(dialedNumber) || prevDialedNumber.length >= 4) {
         if (dialedNumber === "C") {
             setInputValueById('dialed-input', '');
         } else if (dialedNumber === "<") {
@@ -33,6 +37,9 @@ function dialHandler(e) {
         const newTypedNumber = prevDialedNumber + dialedNumber;
         setInputValueById('dialed-input', newTypedNumber);
     }
+
+    dialInput.disabled = true;
+
 }
 
 function pinSubmitHandler() {
