@@ -10,6 +10,7 @@ const dialInput = document.getElementById('dialed-input');
 
 
 
+
 // function 
 function pinGenerator() {
     const randomPin = fourDigitPin();
@@ -45,12 +46,28 @@ function dialHandler(e) {
 function pinSubmitHandler() {
     const generatedPin = getInputValueById('generated-pin');
     const dialedPin = getInputValueById('dialed-input');
-    if(generatedPin === dialedPin){
+    let actionCount = getInnerTextById('action-count');
+    console.log(actionCount);
+    if (actionCount === 1){
+        submitBtn.disabled = true;
+        generator.disabled = true;
+        numberPad.setAttributes = 'disabled'
+    }
+
+    if(generatedPin === '' || dialedPin === ''){
+        alert(`Please generate a pin then submit`);
+        return;
+    }
+
+
+    if (generatedPin === dialedPin) {
         successMessage.style.display = 'block';
         failureMessage.style.display = 'none';
-    }else{
+    } else {
         successMessage.style.display = 'none';
         failureMessage.style.display = 'block';
+        actionCount = actionCount - 1;
+        setInnerTextById('action-count',parseInt(actionCount));
     }
 
 }
